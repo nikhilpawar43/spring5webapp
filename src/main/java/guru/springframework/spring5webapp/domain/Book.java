@@ -1,7 +1,9 @@
 package guru.springframework.spring5webapp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +21,16 @@ public class Book {
     
     private String isbn;
     
-    @ManyToMany(mappedBy = "books")
-    private List<Author> authors;
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
+    private List<Author> authors = new ArrayList<>();
 
     public Book() {
         
+    }
+
+    public Book(String name, String isbn) {
+        this.name = name;
+        this.isbn = isbn;
     }
 
     public Long getId() {
