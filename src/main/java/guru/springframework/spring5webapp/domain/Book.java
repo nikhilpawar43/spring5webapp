@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -23,6 +24,9 @@ public class Book {
     
     @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
     private List<Author> authors = new ArrayList<>();
+    
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Publisher publisher;
 
     public Book() {
         
@@ -63,6 +67,14 @@ public class Book {
 
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     @Override

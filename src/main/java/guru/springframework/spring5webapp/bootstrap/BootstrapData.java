@@ -25,20 +25,27 @@ public class BootstrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Publisher abcPublisherHouse = new Publisher("ABC Publisher House", "Billing road", "Pheonix", "Arizona", "123412");
+        publisherRepository.save(abcPublisherHouse);
+        
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain driven design", "1234343");
+        ddd.setPublisher(abcPublisherHouse);
         
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
+        abcPublisherHouse.getBooks().add(ddd);
         
         authorRepository.save(eric);
         bookRepository.save(ddd);
         
         Author rod = new Author("Rod", "johnson");
         Book noEJB = new Book("J2EE framework without EJB", "3432123");
+        noEJB.setPublisher(abcPublisherHouse);
         
         rod.getBooks().add(noEJB);
         noEJB.getAuthors().add(rod);
+        abcPublisherHouse.getBooks().add(noEJB);
 
         authorRepository.save(rod);
         bookRepository.save(noEJB);
@@ -46,13 +53,7 @@ public class BootstrapData implements CommandLineRunner {
         System.out.println("Bootstrap data result:");
         System.out.println(bookRepository.count());
 
-        Publisher abcPublisherHouse = new Publisher("ABC Publisher House", "Billing road", "Pheonix", "Arizona", "123412");
-        Publisher jimPublications = new Publisher("Jim Publications", "Trading center", "George town", "Arizona", "435134");
-        
-        publisherRepository.save(abcPublisherHouse);
-        publisherRepository.save(jimPublications);
-
         System.out.println("Bootstrap publisher data: ");
-        System.out.println(publisherRepository.count());
+        System.out.println("No of books published by publisher: " + abcPublisherHouse.getBooks().size());
     }
 }

@@ -1,9 +1,15 @@
 package guru.springframework.spring5webapp.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Publisher {
@@ -21,6 +27,10 @@ public class Publisher {
     private String state;
     
     private String zipCode;
+    
+    @OneToMany(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "publisher_id")
+    private List<Book> books = new ArrayList<>();
 
     public Publisher() {
         
@@ -80,6 +90,14 @@ public class Publisher {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override
